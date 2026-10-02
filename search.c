@@ -1,13 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "bst.h"
+#include "search.h"
+
+/* ===== 순차 탐색 (Sequential Search) ===== */
+
+int sequential_search(const int arr[], int n, int key, int *cmp)
+{
+    *cmp = 0;
+    for (int i = 0; i < n; i++) {
+        (*cmp)++; /* 원소 하나와 비교: 비교 1회 */
+        if (arr[i] == key)
+            return 1; /* 탐색 성공: 즉시 종료 */
+    }
+    return 0; /* 마지막 원소까지 비교했는데 없으면 탐색 실패 */
+}
+
+/* ===== 이진 탐색 트리 (BST) ===== */
 
 /* 새 노드를 동적 할당하고 초기화한다 */
 static Node *create_node(int value)
 {
     Node *n = (Node *)malloc(sizeof(Node));
-    if (n == NULL)
-    {
+    if (n == NULL) {
         perror("malloc");
         exit(EXIT_FAILURE);
     }
@@ -24,22 +38,16 @@ Node *bst_insert(Node *root, int value, long *cmp)
         return new_node; /* 빈 트리: 비교 없이 루트가 된다 */
 
     Node *cur = root;
-    for (;;)
-    {
+    for (;;) {
         (*cmp)++; /* value와 cur->data를 비교: 노드 1개 방문 = 비교 1회 */
-        if (value < cur->data)
-        {
-            if (cur->left == NULL)
-            {
+        if (value < cur->data) {
+            if (cur->left == NULL) {
                 cur->left = new_node;
                 break;
             }
             cur = cur->left;
-        }
-        else
-        { /* value > cur->data (과제의 데이터는 서로 다른 값이다) */
-            if (cur->right == NULL)
-            {
+        } else { /* value > cur->data (과제의 데이터는 서로 다른 값이다) */
+            if (cur->right == NULL) {
                 cur->right = new_node;
                 break;
             }
@@ -53,8 +61,7 @@ int bst_search(const Node *root, int key, int *cmp)
 {
     const Node *cur = root;
     *cmp = 0;
-    while (cur != NULL)
-    {
+    while (cur != NULL) {
         (*cmp)++; /* 노드 1개 방문 = 비교 1회 */
         if (key == cur->data)
             return 1; /* 탐색 성공 */
