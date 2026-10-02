@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "bst.h"
+#include "search.h"
 
 #define DATA_COUNT 100
-#define KEY_COUNT 50
-#define MAX_VALUE 1000
+#define KEY_COUNT  50
+#define MAX_VALUE  1000
 
 static int rand_range(int lo, int hi)
 {
@@ -17,27 +17,13 @@ static void generate_distinct(int arr[], int n)
 {
     int used[MAX_VALUE + 1] = {0};
     int count = 0;
-    while (count < n)
-    {
+    while (count < n) {
         int v = rand_range(0, MAX_VALUE);
         if (used[v])
             continue; /* 이미 나온 값이면 버리고 새로 생성한다 */
         used[v] = 1;
         arr[count++] = v;
     }
-}
-
-/* 순차 탐색: 원소 하나와 비교할 때마다 1회; *cmp에 총 비교 횟수를 저장한다 */
-static int sequential_search(const int arr[], int n, int key, int *cmp)
-{
-    *cmp = 0;
-    for (int i = 0; i < n; i++)
-    {
-        (*cmp)++;
-        if (arr[i] == key)
-            return 1;
-    }
-    return 0;
 }
 
 /* 정수를 천 단위 쉼표가 있는 문자열로 변환한다 (예: 3421 -> "3,421") */
@@ -52,8 +38,7 @@ static void format_number(long value, char *out, size_t size)
 
     if (start)
         out[j++] = '-';
-    for (int i = start; i < len && j + 2 < size; i++)
-    {
+    for (int i = start; i < len && j + 2 < size; i++) {
         if (i > start && (len - i) % 3 == 0)
             out[j++] = ','; /* 오른쪽부터 세 자리마다 쉼표 */
         out[j++] = raw[i];
@@ -94,14 +79,12 @@ int main(int argc, char *argv[])
 
     long seq_total = 0, bst_total = 0;
 
-    for (int i = 0; i < KEY_COUNT; i++)
-    {
+    for (int i = 0; i < KEY_COUNT; i++) {
         int seq_cmp, bst_cmp;
         int seq_found = sequential_search(data, DATA_COUNT, keys[i], &seq_cmp);
         int bst_found = bst_search(root, keys[i], &bst_cmp);
 
-        if (seq_found != bst_found)
-        { /* 두 탐색의 성공/실패 결과는 반드시 같아야 한다 */
+        if (seq_found != bst_found) { /* 두 탐색의 성공/실패 결과는 반드시 같아야 한다 */
             fprintf(stderr, "Inconsistent result for key %d\n", keys[i]);
             bst_free(root);
             return EXIT_FAILURE;
