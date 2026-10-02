@@ -1,13 +1,22 @@
-#ifndef BST_H
-#define BST_H
+#ifndef SEARCH_H
+#define SEARCH_H
 
 /* 이진 탐색 트리(BST)의 노드 (연결 자료구조) */
-typedef struct Node
-{
+typedef struct Node {
     int data;
     struct Node *left;
     struct Node *right;
 } Node;
+
+/* ===== 순차 탐색 (Sequential Search) ===== */
+
+/*
+ * 배열 arr(원소 n개)에서 key를 순차 탐색한다. 찾으면 1, 못 찾으면 0을 반환한다.
+ * 원소 하나와 비교할 때마다 1회로 세며, *cmp에 총 비교 횟수가 저장된다.
+ */
+int sequential_search(const int arr[], int n, int key, int *cmp);
+
+/* ===== 이진 탐색 트리 (BST) ===== */
 
 /*
  * value를 BST에 삽입하고 루트를 반환한다 (트리가 비어 있으면 새 노드가 루트).
