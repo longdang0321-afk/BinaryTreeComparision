@@ -1,5 +1,5 @@
 # BinaryTreeComparision
-comparison between sequential search anhd BST search
+comparison between sequential search and BST search
 과제 05: 순차 탐색과 BST 탐색의 비교
 
 비교 횟수 기준: 순차 탐색은 원소 하나와 비교할 때마다 1회, BST는 노드 하나를 방문할 때마다 1회로 센다 (삽입·탐색 동일). 빈 트리에 첫 노드를 넣을 때는 비교가 없다.
